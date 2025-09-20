@@ -12,49 +12,49 @@ const ChatboxWidget = () => {
     setMessage("");
     setIsLoading(true);
 
-    // Send the message to the serverY
-    fetch("http://localhost:3000/api/query", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ q: message }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Response from server:", data);
-        // Add the server response to the chat history
-        setChatHistory([...chatHistory, { sender: "server", text: data.response }]);
-      })
-      .catch((error) => {
-        console.error("Error communicating with server:", error);
+    // Add the user message to the chat history
+    const newUserMessage = {
+      sender: "user",
+      text: userMessage,
+      timestamp: new Date(),
+    };
+    setChatHistory((prev) => [...prev, newUserMessage]);
+
+    try {
+      // Send the message to the server
+      const response = await fetch("http://localhost:3000/api/query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ q: userMessage }),
       });
-      
+
       const data = await response.json();
-      
+
       // Add the server response to the chat history
-      const serverMessage = { 
-        sender: "assistant", 
-        text: data.text || "I received your message!", 
-        timestamp: new Date() 
+      const serverMessage = {
+        sender: "assistant",
+        text: data.response || "I received your message!",
+        timestamp: new Date(),
       };
-      setChatHistory(prev => [...prev, serverMessage]);
+      setChatHistory((prev) => [...prev, serverMessage]);
     } catch (error) {
       console.error("Error communicating with server:", error);
       // Add error message to chat
-      const errorMessage = { 
-        sender: "assistant", 
-        text: "Sorry, I'm having trouble connecting right now. Try again later!", 
-        timestamp: new Date() 
+      const errorMessage = {
+        sender: "assistant",
+        text: "Sorry, I'm having trouble connecting right now. Try again later!",
+        timestamp: new Date(),
       };
-      setChatHistory(prev => [...prev, errorMessage]);
+      setChatHistory((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -73,27 +73,51 @@ const ChatboxWidget = () => {
         {chatHistory.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-full flex items-center justify-center mb-3">
-              <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              <svg
+                className="w-6 h-6 text-emerald-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
               </svg>
             </div>
             <p className="text-slate-500 text-sm">Start a conversation!</p>
-            <p className="text-slate-400 text-xs mt-1">Ask me anything about your courses</p>
+            <p className="text-slate-400 text-xs mt-1">
+              Ask me anything about your courses
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
             {chatHistory.map((chat, index) => (
-              <div key={index} className={`flex ${chat.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                  chat.sender === 'user' 
-                    ? 'bg-blue-500 text-white rounded-br-none' 
-                    : 'bg-white border border-slate-200 text-slate-800 rounded-bl-none'
-                }`}>
+              <div
+                key={index}
+                className={`flex ${chat.sender === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    chat.sender === "user"
+                      ? "bg-blue-500 text-white rounded-br-none"
+                      : "bg-white border border-slate-200 text-slate-800 rounded-bl-none"
+                  }`}
+                >
                   <p className="text-sm">{chat.text}</p>
-                  <p className={`text-xs mt-1 ${
-                    chat.sender === 'user' ? 'text-blue-100' : 'text-slate-400'
-                  }`}>
-                    {chat.timestamp?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <p
+                    className={`text-xs mt-1 ${
+                      chat.sender === "user"
+                        ? "text-blue-100"
+                        : "text-slate-400"
+                    }`}
+                  >
+                    {chat.timestamp?.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
                 </div>
               </div>
@@ -104,8 +128,14 @@ const ChatboxWidget = () => {
                   <div className="flex items-center space-x-2">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      <div
+                        className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
                     </div>
                     <span className="text-xs text-slate-500">Thinking...</span>
                   </div>
@@ -134,8 +164,18 @@ const ChatboxWidget = () => {
           {isLoading ? (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           ) : (
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
             </svg>
           )}
         </button>
