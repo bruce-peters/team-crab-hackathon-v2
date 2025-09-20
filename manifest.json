@@ -26,5 +26,10 @@
       "resources": ["dist/dashboard-main.css"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+   "icons": {
+    "16": "canvailogo16.png",
+    "48": "canvailogo48.png",
+    "128": "canvailogo128.png"
+  }
 }
