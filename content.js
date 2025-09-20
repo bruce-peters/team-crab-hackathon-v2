@@ -1,18 +1,21 @@
 (function () {
-    // Create banner element
-    const banner = document.createElement("div");
-    banner.innerText = "Hello! I am here!";
-    banner.style.background = "#4a76b2";
-    banner.style.color = "white";
-    banner.style.padding = "10px";
-    banner.style.fontSize = "18px";
-    banner.style.fontWeight = "bold";
-    banner.style.textAlign = "center";
-    banner.style.zIndex = "9999";
+    // Create container for React dashboard
+    const dashboardContainer = document.createElement("div");
+    dashboardContainer.id = "canvas-dashboard-extension";
+    dashboardContainer.style.zIndex = "9999";
+    dashboardContainer.style.position = "relative";
 
-    // Insert it above the dashboard content
-    const target = document.querySelector("body"); // fallback
+    // Insert the container above the main content
+    const target = document.querySelector("body");
     if (target) {
-        target.insertBefore(banner, target.firstChild);
+        target.insertBefore(dashboardContainer, target.firstChild);
+        
+        // Load and mount the React dashboard
+        if (window.mountCanvasDashboard) {
+            window.mountCanvasDashboard(dashboardContainer);
+        } else {
+            // Fallback if React bundle hasn't loaded yet
+            dashboardContainer.innerHTML = '<div style="background: #4a76b2; color: white; padding: 10px; text-align: center;">Loading Canvas Dashboard...</div>';
+        }
     }
 })();
