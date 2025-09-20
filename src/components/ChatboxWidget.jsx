@@ -25,7 +25,7 @@ const ChatboxWidget = () => {
       .then((data) => {
         console.log("Response from server:", data);
         // Add the server response to the chat history
-        setChatHistory([...chatHistory, { sender: "server", text: data.text }]);
+        setChatHistory([...chatHistory, { sender: "server", text: data.response }]);
       })
       .catch((error) => {
         console.error("Error communicating with server:", error);
