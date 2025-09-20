@@ -13,6 +13,11 @@
       "js": ["dist/dashboard.js", "content.js"],
       "run_at": "document_end"
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/dashboard-main.css"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }
-
