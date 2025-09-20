@@ -2,6 +2,7 @@ import React from 'react';
 import WelcomeWidget from './WelcomeWidget';
 import StatsWidget from './StatsWidget';
 import QuickActions from './QuickActions';
+import TasksWidget from './TasksWidget';
 
 const Dashboard = () => {
   return (
@@ -30,6 +31,7 @@ const Dashboard = () => {
       }}>
         <WelcomeWidget />
         <StatsWidget />
+        <TasksWidget />
         <QuickActions />
       </div>
     </div>
