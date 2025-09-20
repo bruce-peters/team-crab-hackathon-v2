@@ -65,7 +65,7 @@ const ChatboxWidget = () => {
         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
       </div>
 
-      <div className="bg-slate-50 rounded-lg p-4 h-64 overflow-y-auto mb-4 border">
+      <div className="bg-slate-50 rounded-lg p-4 h-64 overflow-y-auto scrollbar-thin mb-4 border">
         {chatHistory.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <div className="w-12 h-12 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-full flex items-center justify-center mb-3">

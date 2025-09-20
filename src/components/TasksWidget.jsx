@@ -93,7 +93,7 @@ const TasksWidget = () => {
         </span>
       </div>
       
-      <div className="space-y-3 max-h-80 overflow-y-auto">
+      <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-thin">
         {tasks.length === 0 ? (
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
