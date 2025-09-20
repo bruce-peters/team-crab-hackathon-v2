@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Canvas Hello Banner",
+  "name": "Canvas Dashboard Extension",
   "version": "1.0",
-  "description": "Adds a simple banner above the Canvas dashboard.",
+  "description": "Adds a React-based dashboard to Canvas pages.",
   "permissions": ["scripting"],
   "content_scripts": [
     {
       "matches": ["https://*.instructure.com/*"],
-      "js": ["content.js"]
+      "js": ["dist/dashboard.js", "content.js"],
+      "run_at": "document_end"
     }
   ]
 }
