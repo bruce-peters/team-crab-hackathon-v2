@@ -15,10 +15,10 @@ const Dashboard = () => {
         <WelcomeWidget />
         <StatsWidget />
         <QuickActions />
+        <TasksWidget />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-

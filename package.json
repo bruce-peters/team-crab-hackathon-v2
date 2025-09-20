@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "content.js",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
