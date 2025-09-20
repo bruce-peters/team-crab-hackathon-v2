@@ -4,6 +4,9 @@
   "version": "1.0",
   "description": "Adds a React-based dashboard to Canvas pages.",
   "permissions": ["scripting"],
+  "background": {
+    "service_worker": "sw.js"
+  },
   "content_scripts": [
     {
       "matches": ["https://*.instructure.com/*"],

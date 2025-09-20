@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Dashboard Extension Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #dashboard {
+            background-color: white;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .mock-content {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Canvas Dashboard Extension Test</h1>
+        <p>This page simulates how the extension would appear on a Canvas page.</p>
+    </div>
+
+    <div id="dashboard">
+        <h3>Dashboard Container (Target Div)</h3>
+        <p>The Canvas Dashboard Extension should inject here.</p>
+    </div>
+
+    <div class="mock-content">
+        <h2>Mock Canvas Content</h2>
+        <p>This represents the normal Canvas page content that would appear below the dashboard.</p>
+        <p>Dashboard should appear above this content when the extension is loaded.</p>
+    </div>
+
+    <!-- Load the built React dashboard -->
+    <script src="dist/dashboard.js"></script>
+    
+    <!-- Simulate the content script behavior -->
+    <script>
+        // Simulate the content script
+        (function () {
+            // Look for existing dashboard div
+            const dashboardDiv = document.querySelector("div[id*='dashboard'], div[class*='dashboard'], #dashboard");
+            
+            if (dashboardDiv) {
+                // Create container for React dashboard
+                const dashboardContainer = document.createElement("div");
+                dashboardContainer.id = "canvas-dashboard-extension";
+                dashboardContainer.style.position = "relative";
+                
+                // Insert the container inside the dashboard div
+                dashboardDiv.appendChild(dashboardContainer);
+                
+                // Load and mount the React dashboard
+                if (window.mountCanvasDashboard) {
+                    window.mountCanvasDashboard(dashboardContainer);
+                } else {
+                    // Fallback if React bundle hasn't loaded yet
+                    dashboardContainer.innerHTML = '<div style="background: #4a76b2; color: white; padding: 10px; text-align: center;">Loading Canvas Dashboard...</div>';
+                }
+            } else {
+                console.log('No dashboard div found');
+            }
+        })();
+    </script>
+</body>
+</html>
