@@ -1,41 +1,26 @@
-import React from 'react';
-import WelcomeWidget from './WelcomeWidget';
-import StatsWidget from './StatsWidget';
-import QuickActions from './QuickActions';
-import TasksWidget from './TasksWidget';
+import React from "react";
+import WelcomeWidget from "./WelcomeWidget";
+import StatsWidget from "./StatsWidget";
+import QuickActions from "./QuickActions";
+import React from "react";
+import WelcomeWidget from "./WelcomeWidget";
+import StatsWidget from "./StatsWidget";
+import QuickActions from "./QuickActions";
+import TasksWidget from "./TasksWidget";
 
 const Dashboard = () => {
   return (
-    <div style={{
-      backgroundColor: '#f8f9fa',
-      border: '1px solid #dee2e6',
-      borderRadius: '8px',
-      padding: '20px',
-      margin: '10px 0',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <h2 style={{
-        color: '#2c3e50',
-        marginTop: '0',
-        marginBottom: '20px',
-        textAlign: 'center'
-      }}>
+    <div className="bg-gray-100 border border-gray-300 rounded-lg p-5 my-2 shadow-md font-sans">
+      <h2 className="text-gray-800 mt-0 mb-5 text-center text-xl font-semibold">
         Canvas Dashboard Extension
       </h2>
-      
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '15px'
-      }}>
-        <WelcomeWidget />
-        <StatsWidget />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <TasksWidget />
-        <QuickActions />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
