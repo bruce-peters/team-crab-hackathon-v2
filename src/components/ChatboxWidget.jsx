@@ -12,18 +12,22 @@ const ChatboxWidget = () => {
     setMessage("");
     setIsLoading(true);
 
-    // Add the user message to the chat history
-    const newUserMessage = { sender: "user", text: userMessage, timestamp: new Date() };
-    setChatHistory(prev => [...prev, newUserMessage]);
-
-    try {
-      // Send the message to the server
-      const response = await fetch("http://localhost:3000/api/query", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ q: userMessage }),
+    // Send the message to the serverY
+    fetch("http://localhost:3000/api/query", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ q: message }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Response from server:", data);
+        // Add the server response to the chat history
+        setChatHistory([...chatHistory, { sender: "server", text: data.response }]);
+      })
+      .catch((error) => {
+        console.error("Error communicating with server:", error);
       });
       
       const data = await response.json();
