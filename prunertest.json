@@ -1,23 +1,5 @@
 [
   {
-    "id": "1230249",
-    "name": "In-Class Rhetorical Analysis Essay",
-    "due_at": "2025-09-10T22:00:00Z",
-    "points_possible": 15,
-    "assignment_group_id": "105020",
-    "submission_types": [
-      "external_tool"
-    ],
-    "has_submitted_submissions": false,
-    "course_id": "47537",
-    "course_name": "AP Eng Lang F - Larkin - Fall",
-    "html_url": "https://smuhsd.instructure.com/courses/47537/assignments/1230249",
-    "description": "Hi friends: As you probably know, the school's Wi-Fi connection is unstable right now.&nbsp; We will be writing tomorrow's essay on paper.&nbsp;",
-    "assignment_group_name": "Tests/papers/projects",
-    "assignment_group_weight": 0,
-    "contribution_to_course_weight": 0
-  },
-  {
     "id": "1200873",
     "name": "CW 0926 - In-Class Storytelling - Shopping",
     "due_at": "2025-09-27T06:59:00Z",

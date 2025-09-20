@@ -32,22 +32,28 @@ const ChatboxWidget = () => {
 
       const data = await response.json();
 
-      // Add the server response to the chat history
-      const serverMessage = {
-        sender: "assistant",
-        text: data.response || "I received your message!",
-        timestamp: new Date(),
-      };
-      setChatHistory((prev) => [...prev, serverMessage]);
+      // Add a 0.5 second delay before showing the response
+      setTimeout(() => {
+        // Add the server response to the chat history
+        const serverMessage = {
+          sender: "assistant",
+          text: data.response || "I received your message!",
+          timestamp: new Date(),
+        };
+        setChatHistory((prev) => [...prev, serverMessage]);
+      }, 500);
     } catch (error) {
       console.error("Error communicating with server:", error);
-      // Add error message to chat
-      const errorMessage = {
-        sender: "assistant",
-        text: "Sorry, I'm having trouble connecting right now. Try again later!",
-        timestamp: new Date(),
-      };
-      setChatHistory((prev) => [...prev, errorMessage]);
+      // Add a 0.5 second delay before showing the error message
+      setTimeout(() => {
+        // Add error message to chat
+        const errorMessage = {
+          sender: "assistant",
+          text: "Sorry, I'm having trouble connecting right now. Try again later!",
+          timestamp: new Date(),
+        };
+        setChatHistory((prev) => [...prev, errorMessage]);
+      }, 500);
     } finally {
       setIsLoading(false);
     }
@@ -100,19 +106,17 @@ const ChatboxWidget = () => {
                 className={`flex ${chat.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                    chat.sender === "user"
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${chat.sender === "user"
                       ? "bg-blue-500 text-white rounded-br-none"
                       : "bg-white border border-slate-200 text-slate-800 rounded-bl-none"
-                  }`}
+                    }`}
                 >
                   <p className="text-sm">{chat.text}</p>
                   <p
-                    className={`text-xs mt-1 ${
-                      chat.sender === "user"
+                    className={`text-xs mt-1 ${chat.sender === "user"
                         ? "text-blue-100"
                         : "text-slate-400"
-                    }`}
+                      }`}
                   >
                     {chat.timestamp?.toLocaleTimeString([], {
                       hour: "2-digit",
