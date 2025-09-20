@@ -3,22 +3,14 @@
   "name": "Canvas Dashboard Extension",
   "version": "1.0",
   "description": "Adds a React-based dashboard to Canvas pages.",
-  "permissions": [
-    "scripting",
-    "storage"
-  ],
+  "permissions": ["scripting", "storage"],
   "background": {
     "service_worker": "sw.js"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*.instructure.com/*"
-      ],
-      "js": [
-        "dist/dashboard.js",
-        "content.js"
-      ],
+      "matches": ["https://*.instructure.com/*"],
+      "js": ["dist/dashboard.js", "content.js"],
       "run_at": "document_end"
     }
   ],
@@ -28,14 +20,14 @@
       "matches": ["<all_urls>"]
     }
   ],
-   "icons": {
+  "icons": {
     "16": "canvailogo16.png",
     "48": "canvailogo48.png",
     "128": "canvailogo128.png"
   },
   "web_accessible_resources": [
     {
-      "resources": ["prunertest.json"],
+      "resources": ["prunertest.json", "dist/dashboard-main.css"],
       "matches": ["<all_urls>"]
     }
   ]
