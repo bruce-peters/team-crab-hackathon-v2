@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-const ai = new GoogleGenAI({ apiKey: "AIzaSyB5jUso9XI15a4Q4bgmhPphL5N4yfqoTl0"});
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function analyzeAssignments() {
     // Read the large JSON file
