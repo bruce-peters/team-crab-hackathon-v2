@@ -6,3 +6,6 @@ node_modules/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Local Gemini API key for the extension (see config.example.js)
+config.js

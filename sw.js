@@ -1,6 +1,13 @@
 // Service Worker for Canvas Dashboard Extension
 
-const GEMINI_API_KEY = "AIzaSyB5jUso9XI15a4Q4bgmhPphL5N4yfqoTl0"; // safer: use chrome.storage.local or ask user input
+// The Gemini API key is read from config.js (gitignored). Copy config.example.js
+// to config.js and paste your key there.
+try {
+  importScripts("config.js");
+} catch (e) {
+  console.warn("config.js not found: copy config.example.js to config.js and add your Gemini API key");
+}
+const GEMINI_API_KEY = self.GEMINI_API_KEY || "";
 //const CANVAS_TOKEN = "YOUR_CANVAS_TOKEN"; // same deal, don’t hardcode long-term
 const CANVAS_API = "https://YOURCANVAS.instructure.com/api/v1";
 
@@ -37,8 +44,12 @@ async function analyzeAssignments(assignments) {
     `;
     console.log(prompt)
 
+  if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
+    throw new Error("No Gemini API key: set it in config.js (see config.example.js)");
+  }
+
   const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY,
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" + GEMINI_API_KEY,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -97,7 +108,14 @@ async function getTasks() {
   // Await the storage fetch
   const result = await chrome.storage.local.get("analyzedAssignments");
 
-  let analyzedAssignments = result.analyzedAssignments[0] || [];
+  // Nothing is stored until the first Gemini analysis has finished.
+  let analyzedAssignments = result.analyzedAssignments || [];
+
+  // Gemini may wrap the list in an object ({"assignments": [...]}), which
+  // analyzeAssignments stores as [[...]]; unwrap that case.
+  if (Array.isArray(analyzedAssignments[0])) {
+    analyzedAssignments = analyzedAssignments[0];
+  }
 
   // Ensure it's always an array
   if (!Array.isArray(analyzedAssignments)) {
